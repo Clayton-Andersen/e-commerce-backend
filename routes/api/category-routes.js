@@ -1,6 +1,4 @@
 const router = require('express').Router();
-const { userInfo } = require('os');
-const { debugPort } = require('process');
 const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
@@ -9,10 +7,7 @@ router.get('/', (req, res) => {
     // find all categories
     // be sure to include its associated Products
     Category.findAll({
-        include: {
-            model: Product,
-            attributes: ['id', 'product_name', 'price', 'stock']
-        }
+        include: [Product]
     })
         .then(dbCategoryData => res.json(dbCategoryData))
         .catch(err => {
@@ -28,10 +23,7 @@ router.get('/:id', (req, res) => {
         where: {
             id: req.params.id
         },
-        include: {
-            model: Product,
-            attributes: ['id', 'product_name', 'price', 'stock']
-        }
+        include: [Product]
     })
         .then(dbCategoryData => {
             if (!dbCategoryData) {

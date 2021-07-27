@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
-const { findOne } = require('../../models/Category');
 
 // The `/api/tags` endpoint
 
@@ -11,6 +10,7 @@ router.get('/', (req, res) => {
         include: [
             {
                 model: Product,
+                through: ProductTag
             }
         ]
     })
@@ -28,6 +28,7 @@ router.get('/:id', (req, res) => {
         include: [
             {
                 model: Product,
+                through: ProductTag
             }
         ]
     })
